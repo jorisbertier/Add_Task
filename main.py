@@ -30,7 +30,6 @@ def create_task():
 
 # MENU 3 DELETE A TASK
 def delete_task():
-    print('List of tasks, please enter the task to delete corretly')
 
     with open("tasks.txt", "r", encoding="utf-8") as file:
         tasks = file.readlines()
@@ -39,17 +38,13 @@ def delete_task():
         print('No task available to delete')
         return
     
+    print('List of tasks')
+    print('---------')
     for i, task in enumerate(tasks, start=1):
         print(f'[{i}]-{task}')
     
     select_task = input('Please select a task to delete:')
-    # with open("tasks.txt", "w", encoding="utf-8") as file:
-    #     for i, task in enumerate(tasks, start=1):
-    #         if select_task == task.strip():
-    #             task_found = True
-    #             print(f'Deleted task found: {task}')
-    #             continue
-    #         file.write(task)
+
     try:
         task_index = int(select_task) - 1
         if task_index < 0 or task_index >= len(tasks):
@@ -66,30 +61,40 @@ def delete_task():
     with open("tasks.txt", "w", encoding="utf-8") as file:
         file.writelines(tasks)
     print(f"Task deleted : {task_delete.strip()}")
-    
+
 # Menu 4 MODIFY A TASK
 def modify_task():
-    print('List of tasks, please enter the task to delete corretly')
-    see_all_tasks()
-
-    select_task = input('Please select a task to delete:')
-    task_found = False
-
     with open("tasks.txt", "r", encoding="utf-8") as file:
         tasks = file.readlines()
-    with open("tasks.txt", "w", encoding="utf-8") as file:
-        for task in tasks:
-            # print(t.strip())
-            # print(t)
-            if select_task == task.strip():
-                task_found = True
-                print(f'Deleted task found: {task}')
-                continue
-            file.write(task)
+    
+    if not tasks:
+        print('No task available to delete')
+        return
+    
+    print('List of tasks')
+    print('---------')
+    for i, task in enumerate(tasks, start=1):
+        print(f'[{i}]-{task}')
+    
+    select_task = input('Please select a task to delete:')
 
-    if not task_found:
-        print('Task not found')
-    return
+    try:
+        task_index = int(select_task) - 1
+        if task_index < 0 or task_index >= len(tasks):
+            print('Invalid task number. Try again')
+            select_task = input('Please select a task to delete:')
+            return
+        modify_task = input(f'Modify task [{task_index}] :')
+    except ValueError:
+        print("Please enter a valid number.")
+        select_task = input('Please select a task to delete:')
+        return
+    tasks[task_index] = modify_task + '\n'
+
+    with open("tasks.txt", "w", encoding="utf-8") as file:
+        file.writelines(tasks)
+
+    print(f"Task modify to: {tasks[task_index].strip()}")
 
 if menu == 1:
     see_all_tasks()
@@ -98,6 +103,6 @@ elif menu == 2:
 elif menu == 3:
     delete_task()
 elif menu == 4:
-    print("44444")
+    modify_task()
 else:
     menu = int(input('Choose a menu number:'))
