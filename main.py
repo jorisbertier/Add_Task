@@ -1,6 +1,3 @@
-with open("tasks.txt", "r", encoding="utf-8") as file:
-    tasks = file.readlines()
-    tasks = [t.strip() for t in tasks]
 
 def display_menu():
     print('Tasks manager')
@@ -11,13 +8,13 @@ def display_menu():
     print('4. Modify a task')
     print('Type 5 to close the program' )
 
-display_menu()
-
-menu = int(input('Choose a menu number:'))
-
 # MENU 1 SEE ALL TASKS
 def see_all_tasks():
+        with open("tasks.txt", "r", encoding="utf-8") as file:
+            tasks = file.readlines()
+            tasks = [t.strip() for t in tasks]
         print(tasks)
+
 
 # MENU 2 CREATE A TASK
 def create_task():
@@ -98,16 +95,21 @@ def modify_task():
 
     print(f"Task modify to: {tasks[task_index].strip()}")
 
-if menu == 1:
-    see_all_tasks()
-elif menu == 2:
-    create_task()
-elif menu == 3:
-    delete_task()
-elif menu == 4:
-    modify_task()
-elif menu == 5:
-    print('Tasks manager is close')
-    exit()
-else:
+def main():
+    display_menu()
     menu = int(input('Choose a menu number:'))
+    if menu == 1:
+        see_all_tasks()
+    elif menu == 2:
+        create_task()
+    elif menu == 3:
+        delete_task()
+    elif menu == 4:
+        modify_task()
+    elif menu == 5:
+        print('Tasks manager is close')
+        exit()
+    else:
+        menu = int(input('Choose a menu number:'))
+
+main()
