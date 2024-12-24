@@ -3,12 +3,13 @@ with open("tasks.txt", "r", encoding="utf-8") as file:
     tasks = [t.strip() for t in tasks]
 
 def display_menu():
-    print('Manager of tasks')
+    print('Tasks manager')
     print('--------------')
     print('1. See all tasks')
     print('2. Create a task')
     print('3. Delete a task')
     print('4. Modify a task')
+    print('Type 5 to close the program' )
 
 display_menu()
 
@@ -89,6 +90,7 @@ def modify_task():
         print("Please enter a valid number.")
         select_task = input('Please select a task to delete:')
         return
+    
     tasks[task_index] = modify_task + '\n'
 
     with open("tasks.txt", "w", encoding="utf-8") as file:
@@ -104,5 +106,8 @@ elif menu == 3:
     delete_task()
 elif menu == 4:
     modify_task()
+elif menu == 5:
+    print('Tasks manager is close')
+    exit()
 else:
     menu = int(input('Choose a menu number:'))
